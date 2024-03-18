@@ -13,6 +13,6 @@ export const composeMiddlewares = (
   );
 
   return middlewares(() => {
-    return NextResponse.next();
-  });
+          return NextResponse.next();
+      });
 };

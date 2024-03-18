@@ -1501,6 +1501,23 @@ export type CheckboxOption = CatalogProductOption & {
   uncheckedOptionValueEntityId: Scalars['Int']['output'];
 };
 
+/** Checkboxes form field. */
+export type CheckboxesFormField = FormField & {
+  __typename?: 'CheckboxesFormField';
+  /** The entity ID of the form field. */
+  entityId: Scalars['Int']['output'];
+  /** Indicates whether the form field is built-in. */
+  isBuiltIn: Scalars['Boolean']['output'];
+  /** Indicates whether the form field is required. */
+  isRequired: Scalars['Boolean']['output'];
+  /** The label to display for the form field. */
+  label: Scalars['String']['output'];
+  /** The options for the form field. */
+  options: Array<FormFieldOption>;
+  /** The sort order priority of the form field. */
+  sortOrder: Scalars['Int']['output'];
+};
+
 /** The user input for checkbox form fields. */
 export type CheckboxesFormFieldInput = {
   /** The custom form field ID. */
@@ -1514,6 +1531,8 @@ export type CheckboxesFormFieldValue = CustomerFormFieldValue & {
   __typename?: 'CheckboxesFormFieldValue';
   /** Entity ID of a custom form field value on a customer or customer address. */
   entityId: Scalars['Int']['output'];
+  /** The name of the form field that the value is for. */
+  name: Scalars['String']['output'];
   /** List of checkbox value ids selected by customer. */
   valueEntityIds: Array<Scalars['Int']['output']>;
   /** List of checkbox values selected by customer. */
@@ -2439,6 +2458,8 @@ export type CustomerDoesNotExistError = Error & {
 export type CustomerFormFieldValue = {
   /** Entity ID of a custom form field value on a customer or customer address. */
   entityId: Scalars['Int']['output'];
+  /** The name of the form field that the value is for. */
+  name: Scalars['String']['output'];
 };
 
 /** The input for the filled out customer form fields. */
@@ -2574,6 +2595,27 @@ export type DateFieldOption = CatalogProductOption & {
   limitDateBy: LimitDateOption;
 };
 
+/** Date form field. */
+export type DateFormField = FormField & {
+  __typename?: 'DateFormField';
+  /** The default date value for the form field. */
+  defaultDate: Maybe<Scalars['DateTime']['output']>;
+  /** The entity ID of the form field. */
+  entityId: Scalars['Int']['output'];
+  /** Indicates whether the form field is built-in. */
+  isBuiltIn: Scalars['Boolean']['output'];
+  /** Indicates whether the form field is required. */
+  isRequired: Scalars['Boolean']['output'];
+  /** The label to display for the form field. */
+  label: Scalars['String']['output'];
+  /** The latest date that can be selected for the form field. */
+  maxDate: Maybe<Scalars['DateTime']['output']>;
+  /** The earliest date that can be selected for the form field. */
+  minDate: Maybe<Scalars['DateTime']['output']>;
+  /** The sort order priority of the form field. */
+  sortOrder: Scalars['Int']['output'];
+};
+
 /** The user input for date form fields. */
 export type DateFormFieldInput = {
   /** The user date input for the form field in ISO-8601 format. */
@@ -2589,6 +2631,8 @@ export type DateFormFieldValue = CustomerFormFieldValue & {
   date: DateTimeExtended;
   /** Entity ID of a custom form field value on a customer or customer address. */
   entityId: Scalars['Int']['output'];
+  /** The name of the form field that the value is for. */
+  name: Scalars['String']['output'];
 };
 
 /** Date Time Extended */
@@ -2776,6 +2820,77 @@ export type FileUploadFieldOption = CatalogProductOption & {
   maxFileSize: Scalars['Int']['output'];
 };
 
+/** The details of a form field. */
+export type FormField = {
+  /** The entity ID of the form field. */
+  entityId: Scalars['Int']['output'];
+  /** Indicates whether the form field is built-in. */
+  isBuiltIn: Scalars['Boolean']['output'];
+  /** Indicates whether the form field is required. */
+  isRequired: Scalars['Boolean']['output'];
+  /** The label to display for the form field. */
+  label: Scalars['String']['output'];
+  /** The sort order priority of the form field. */
+  sortOrder: Scalars['Int']['output'];
+};
+
+/** Object containing filters for querying form fields. */
+export type FormFieldFiltersInput = {
+  /** Filter by form field entity IDs. */
+  entityIds?: InputMaybe<Array<Scalars['Int']['input']>>;
+  /** Filter by built-in form fields. */
+  isBuiltIn?: InputMaybe<Scalars['Boolean']['input']>;
+  /** Filter by required form fields. */
+  isRequired?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+/** The details of an option for a checkbox or multiple choice form field. */
+export type FormFieldOption = {
+  __typename?: 'FormFieldOption';
+  /** The entity ID of the form field option. */
+  entityId: Scalars['Int']['output'];
+  /** The label to display for the form field option. */
+  label: Scalars['String']['output'];
+};
+
+/** The sorting to use on form field results. */
+export enum FormFieldSortInput {
+  FieldId = 'FIELD_ID',
+  SortOrder = 'SORT_ORDER'
+}
+
+/** The types of form fields that can be queried. */
+export type FormFields = {
+  __typename?: 'FormFields';
+  /** The billing address form fields. */
+  billingAddress: Array<FormField>;
+  /** The customer form fields. */
+  customer: Array<FormField>;
+  /** The shipping address form fields. */
+  shippingAddress: Array<FormField>;
+};
+
+
+/** The types of form fields that can be queried. */
+export type FormFieldsBillingAddressArgs = {
+  filters?: InputMaybe<FormFieldFiltersInput>;
+  sortBy?: InputMaybe<FormFieldSortInput>;
+};
+
+
+/** The types of form fields that can be queried. */
+export type FormFieldsCustomerArgs = {
+  filters?: InputMaybe<FormFieldFiltersInput>;
+  sortBy?: InputMaybe<FormFieldSortInput>;
+};
+
+
+/** The types of form fields that can be queried. */
+export type FormFieldsShippingAddressArgs = {
+  filters?: InputMaybe<FormFieldFiltersInput>;
+  sortBy?: InputMaybe<FormFieldSortInput>;
+};
+
 /** Gift wrapping for product */
 export type GiftWrapping = {
   __typename?: 'GiftWrapping';
@@ -2818,6 +2933,8 @@ export type Image = {
   url: Scalars['String']['output'];
   /** Absolute path to original image using store CDN. */
   urlOriginal: Scalars['String']['output'];
+  /** A templatized URL containing a {:size} parameter which can be replaced with a string specifying the desired image size in either inherent width (123w) or width and height (123x123). */
+  urlTemplate: Scalars['String']['output'];
 };
 
 
@@ -3172,6 +3289,25 @@ export type MultiLineTextFieldOption = CatalogProductOption & {
   minLength: Maybe<Scalars['Int']['output']>;
 };
 
+/** Multiline text form field. */
+export type MultilineTextFormField = FormField & {
+  __typename?: 'MultilineTextFormField';
+  /** The default text value for the form field. */
+  defaultText: Maybe<Scalars['String']['output']>;
+  /** The entity ID of the form field. */
+  entityId: Scalars['Int']['output'];
+  /** Indicates whether the form field is built-in. */
+  isBuiltIn: Scalars['Boolean']['output'];
+  /** Indicates whether the form field is required. */
+  isRequired: Scalars['Boolean']['output'];
+  /** The label to display for the form field. */
+  label: Scalars['String']['output'];
+  /** The amount of rows for the form field. */
+  rows: Scalars['Int']['output'];
+  /** The sort order priority of the form field. */
+  sortOrder: Scalars['Int']['output'];
+};
+
 /** The user input for multiple choice form fields. */
 export type MultipleChoiceFormFieldInput = {
   /** The custom form field ID. */
@@ -3185,6 +3321,8 @@ export type MultipleChoiceFormFieldValue = CustomerFormFieldValue & {
   __typename?: 'MultipleChoiceFormFieldValue';
   /** Entity ID of a custom form field value on a customer or customer address. */
   entityId: Scalars['Int']['output'];
+  /** The name of the form field that the value is for. */
+  name: Scalars['String']['output'];
   /** The multiple choice value selected by customer. */
   value: Scalars['String']['output'];
   /** The multiple choice value id selected by customer. */
@@ -3320,6 +3458,29 @@ export type NumberFieldOption = CatalogProductOption & {
   lowest: Maybe<Scalars['Float']['output']>;
 };
 
+/** Number only form field. */
+export type NumberFormField = FormField & {
+  __typename?: 'NumberFormField';
+  /** The default number value for the form field. */
+  defaultNumber: Maybe<Scalars['Float']['output']>;
+  /** The entity ID of the form field. */
+  entityId: Scalars['Int']['output'];
+  /** Indicates whether the form field is built-in. */
+  isBuiltIn: Scalars['Boolean']['output'];
+  /** Indicates whether the form field is required. */
+  isRequired: Scalars['Boolean']['output'];
+  /** The label to display for the form field. */
+  label: Scalars['String']['output'];
+  /** The maximum amount of characters that can be entered into text form field. */
+  maxLength: Maybe<Scalars['Int']['output']>;
+  /** The highest allowed number to be entered in the form field. */
+  maxNumber: Maybe<Scalars['Int']['output']>;
+  /** The lowest allowed number to be entered in the form field. */
+  minNumber: Maybe<Scalars['Int']['output']>;
+  /** The sort order priority of the form field. */
+  sortOrder: Scalars['Int']['output'];
+};
+
 /** The user input for number form fields. */
 export type NumberFormFieldInput = {
   /** The custom form field ID. */
@@ -3333,6 +3494,8 @@ export type NumberFormFieldValue = CustomerFormFieldValue & {
   __typename?: 'NumberFormFieldValue';
   /** Entity ID of a custom form field value on a customer or customer address. */
   entityId: Scalars['Int']['output'];
+  /** The name of the form field that the value is for. */
+  name: Scalars['String']['output'];
   /** The number value submitted by customer. */
   number: Scalars['Float']['output'];
 };
@@ -3531,6 +3694,25 @@ export enum PageType {
   Unsubscribe = 'UNSUBSCRIBE'
 }
 
+/** Password form field. */
+export type PasswordFormField = FormField & {
+  __typename?: 'PasswordFormField';
+  /** The default text value for the form field. */
+  defaultText: Maybe<Scalars['String']['output']>;
+  /** The entity ID of the form field. */
+  entityId: Scalars['Int']['output'];
+  /** Indicates whether the form field is built-in. */
+  isBuiltIn: Scalars['Boolean']['output'];
+  /** Indicates whether the form field is required. */
+  isRequired: Scalars['Boolean']['output'];
+  /** The label to display for the form field. */
+  label: Scalars['String']['output'];
+  /** The maximum amount of characters that can be entered into the form field. */
+  maxLength: Maybe<Scalars['Int']['output']>;
+  /** The sort order priority of the form field. */
+  sortOrder: Scalars['Int']['output'];
+};
+
 /** The user input for password form fields. */
 export type PasswordFormFieldInput = {
   /** The custom form field ID. */
@@ -3544,8 +3726,29 @@ export type PasswordFormFieldValue = CustomerFormFieldValue & {
   __typename?: 'PasswordFormFieldValue';
   /** Entity ID of a custom form field value on a customer or customer address. */
   entityId: Scalars['Int']['output'];
+  /** The name of the form field that the value is for. */
+  name: Scalars['String']['output'];
   /** The password text submitted by a customer. */
   password: Scalars['String']['output'];
+};
+
+/** Pick list form field. Similar to Radio Buttons, but should be rendered as a dropdown select. */
+export type PicklistFormField = FormField & {
+  __typename?: 'PicklistFormField';
+  /** The text to display before a user has made a selection. */
+  choosePrefix: Scalars['String']['output'];
+  /** The entity ID of the form field. */
+  entityId: Scalars['Int']['output'];
+  /** Indicates whether the form field is built-in. */
+  isBuiltIn: Scalars['Boolean']['output'];
+  /** Indicates whether the form field is required. */
+  isRequired: Scalars['Boolean']['output'];
+  /** The label to display for the form field. */
+  label: Scalars['String']['output'];
+  /** The options for the form field. */
+  options: Array<FormFieldOption>;
+  /** The sort order priority of the form field. */
+  sortOrder: Scalars['Int']['output'];
 };
 
 /** A connection to a list of items. */
@@ -4181,6 +4384,23 @@ export type QueryNodeArgs = {
   id: Scalars['ID']['input'];
 };
 
+/** Radio buttons form field. */
+export type RadioButtonsFormField = FormField & {
+  __typename?: 'RadioButtonsFormField';
+  /** The entity ID of the form field. */
+  entityId: Scalars['Int']['output'];
+  /** Indicates whether the form field is built-in. */
+  isBuiltIn: Scalars['Boolean']['output'];
+  /** Indicates whether the form field is required. */
+  isRequired: Scalars['Boolean']['output'];
+  /** The label to display for the form field. */
+  label: Scalars['String']['output'];
+  /** The options for the form field. */
+  options: Array<FormFieldOption>;
+  /** The sort order priority of the form field. */
+  sortOrder: Scalars['Int']['output'];
+};
+
 /** Rating Filter */
 export type RatingSearchFilter = SearchProductFilter & {
   __typename?: 'RatingSearchFilter';
@@ -4371,6 +4591,8 @@ export type RequestResetPasswordError = ValidationError;
 export type RequestResetPasswordInput = {
   /** The email address of the customer requesting a reset password email. */
   email: Scalars['String']['input'];
+  /** A path to direct the customer to from the email. */
+  path?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** The result of requesting a reset password email. */
@@ -4624,6 +4846,8 @@ export type Settings = {
   contact: Maybe<ContactField>;
   /** Store display format information. */
   display: DisplayField;
+  /** The form fields to display on the storefront during customer registration or address creation. */
+  formFields: FormFields;
   /** Inventory settings. */
   inventory: Maybe<InventorySettings>;
   /**
@@ -5052,6 +5276,25 @@ export type TextFieldOption = CatalogProductOption & {
   minLength: Maybe<Scalars['Int']['output']>;
 };
 
+/** A single line text form field. */
+export type TextFormField = FormField & {
+  __typename?: 'TextFormField';
+  /** The default text value of the text form field. */
+  defaultText: Maybe<Scalars['String']['output']>;
+  /** The entity ID of the form field. */
+  entityId: Scalars['Int']['output'];
+  /** Indicates whether the form field is built-in. */
+  isBuiltIn: Scalars['Boolean']['output'];
+  /** Indicates whether the form field is required. */
+  isRequired: Scalars['Boolean']['output'];
+  /** The label to display for the form field. */
+  label: Scalars['String']['output'];
+  /** The maximum amount of characters that can be entered into the form field. */
+  maxLength: Maybe<Scalars['Int']['output']>;
+  /** The sort order priority of the form field. */
+  sortOrder: Scalars['Int']['output'];
+};
+
 /** The user input for text form fields. */
 export type TextFormFieldInput = {
   /** The custom form field ID. */
@@ -5065,6 +5308,8 @@ export type TextFormFieldValue = CustomerFormFieldValue & {
   __typename?: 'TextFormFieldValue';
   /** Entity ID of a custom form field value on a customer or customer address. */
   entityId: Scalars['Int']['output'];
+  /** The name of the form field that the value is for. */
+  name: Scalars['String']['output'];
   /** The text submitted by a customer. */
   text: Scalars['String']['output'];
 };
@@ -5263,7 +5508,7 @@ export type UpdateCustomerAddressResult = {
 };
 
 /** An error when updating a customer. */
-export type UpdateCustomerError = CustomerDoesNotExistError | EmailAlreadyInUseError | ValidationError;
+export type UpdateCustomerError = CustomerDoesNotExistError | CustomerNotLoggedInError | EmailAlreadyInUseError | ValidationError;
 
 /** The values to use for customer update operation. */
 export type UpdateCustomerInput = {
@@ -6315,6 +6560,11 @@ export type GetCategoryTreeQueryVariables = Exact<{
 
 export type GetCategoryTreeQuery = { __typename?: 'Query', site: { __typename?: 'Site', categoryTree: Array<{ __typename?: 'CategoryTreeItem', entityId: number, name: string, path: string, children: Array<{ __typename?: 'CategoryTreeItem', entityId: number, name: string, path: string, children: Array<{ __typename?: 'CategoryTreeItem', entityId: number, name: string, path: string }> }> }> } };
 
+export type CategoryQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type CategoryQuery = { __typename?: 'Query', site: { __typename?: 'Site', categoryTree: Array<{ __typename?: 'CategoryTreeItem', name: string, path: string }> } };
+
 export type GetCategoryQueryVariables = Exact<{
   after?: InputMaybe<Scalars['String']['input']>;
   before?: InputMaybe<Scalars['String']['input']>;
@@ -7106,6 +7356,16 @@ export const GetCategoryTreeDocument = new TypedDocumentString(`
   }
 }
     `) as unknown as TypedDocumentString<GetCategoryTreeQuery, GetCategoryTreeQueryVariables>;
+export const CategoryDocument = new TypedDocumentString(`
+    query Category {
+  site {
+    categoryTree {
+      name
+      path
+    }
+  }
+}
+    `) as unknown as TypedDocumentString<CategoryQuery, CategoryQueryVariables>;
 export const GetCategoryDocument = new TypedDocumentString(`
     query getCategory($after: String, $before: String, $breadcrumbDepth: Int!, $categoryId: Int!, $first: Int, $last: Int) {
   site {
@@ -8073,7 +8333,7 @@ export const GetStoreSettingsDocument = new TypedDocumentString(`
         }
         ... on StoreImageLogo {
           image {
-            url(width: 155)
+            url(width: 255)
             altText
           }
         }

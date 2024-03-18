@@ -1,10 +1,10 @@
-import { getCategoryTree } from '~/client/queries/get-category-tree';
+import { getCategoryTree, getCategory } from '~/client/queries/get-category-tree';
 
 import { BaseFooterMenu } from './base-footer-menu';
 
 export const CategoryFooterMenu = async () => {
-  const categoryTree = await getCategoryTree();
-
+  const categoryTree = await getCategory();
+  
   if (!categoryTree.length) {
     return null;
   }

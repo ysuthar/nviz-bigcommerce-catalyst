@@ -34,6 +34,25 @@ export const HeaderNav = async ({
           className,
         )}
       >
+        <NavigationMenuItem className={cn(inCollapsedNav && 'w-full')}>
+          <NavigationMenuLink asChild>
+            <Link href='/shop-products/'>Shop All</Link>
+          </NavigationMenuLink>
+        </NavigationMenuItem>
+        <NavigationMenuItem className={cn(inCollapsedNav && 'w-full')}>
+          <NavigationMenuLink asChild>
+            <Link href='/'>Bath</Link>
+          </NavigationMenuLink>
+        </NavigationMenuItem>
+        <NavigationMenuItem className={cn(inCollapsedNav && 'w-full')}><NavigationMenuLink asChild>
+            <Link href='/'>Garden</Link>
+          </NavigationMenuLink>
+        </NavigationMenuItem>
+        <NavigationMenuItem className={cn(inCollapsedNav && 'w-full')}><NavigationMenuLink asChild>
+            <Link href='/'>Kitchen</Link>
+          </NavigationMenuLink>
+        </NavigationMenuItem>
+        
         {categoryTree.map((category) => (
           <NavigationMenuItem className={cn(inCollapsedNav && 'w-full')} key={category.path}>
             {category.children.length > 0 ? (

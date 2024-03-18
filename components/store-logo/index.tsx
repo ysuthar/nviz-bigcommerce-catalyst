@@ -18,11 +18,11 @@ export const StoreLogo = async () => {
   return (
     <Image
       alt={logo.image.altText ? logo.image.altText : storeName}
-      className="max-h-16 object-contain"
-      height={32}
+      className=" object-contain"
+      height={55}
       priority
       src={logo.image.url}
-      width={155}
+      width={322}
     />
   );
 };

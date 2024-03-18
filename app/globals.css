@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+.caption-box {
+    background: rgba(255,255,255,0.75);
+    padding: 15px 25px;
+}

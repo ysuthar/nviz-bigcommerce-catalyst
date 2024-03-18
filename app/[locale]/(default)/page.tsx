@@ -30,6 +30,13 @@ export default async function Home({ params: { locale } }: Props) {
       <div className="my-10">
         <NextIntlClientProvider locale={locale} messages={{ Product: messages.Product ?? {} }}>
           <ProductCardCarousel
+            products={newestProducts}
+            showCart={false}
+            showCompare={false}
+            showReviews={false}
+            title={t('Carousel.featuredProducts')}
+          />
+          {/* <ProductCardCarousel
             products={featuredProducts}
             showCart={false}
             showCompare={false}
@@ -42,7 +49,7 @@ export default async function Home({ params: { locale } }: Props) {
             showCompare={false}
             showReviews={false}
             title={t('Carousel.newestProducts')}
-          />
+          /> */}
         </NextIntlClientProvider>
       </div>
     </>

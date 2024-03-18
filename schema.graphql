@@ -1656,6 +1656,27 @@ type CheckboxOption implements CatalogProductOption {
   uncheckedOptionValueEntityId: Int!
 }
 
+"""Checkboxes form field."""
+type CheckboxesFormField implements FormField {
+  """The entity ID of the form field."""
+  entityId: Int!
+
+  """Indicates whether the form field is built-in."""
+  isBuiltIn: Boolean!
+
+  """Indicates whether the form field is required."""
+  isRequired: Boolean!
+
+  """The label to display for the form field."""
+  label: String!
+
+  """The options for the form field."""
+  options: [FormFieldOption!]!
+
+  """The sort order priority of the form field."""
+  sortOrder: Int!
+}
+
 """The user input for checkbox form fields."""
 input CheckboxesFormFieldInput {
   """The custom form field ID."""
@@ -1671,6 +1692,9 @@ type CheckboxesFormFieldValue implements CustomerFormFieldValue {
   Entity ID of a custom form field value on a customer or customer address.
   """
   entityId: Int!
+
+  """The name of the form field that the value is for."""
+  name: String!
 
   """List of checkbox value ids selected by customer."""
   valueEntityIds: [Int!]!
@@ -2706,6 +2730,9 @@ interface CustomerFormFieldValue {
   Entity ID of a custom form field value on a customer or customer address.
   """
   entityId: Int!
+
+  """The name of the form field that the value is for."""
+  name: String!
 }
 
 """The input for the filled out customer form fields."""
@@ -2849,6 +2876,33 @@ type DateFieldOption implements CatalogProductOption {
   limitDateBy: LimitDateOption!
 }
 
+"""Date form field."""
+type DateFormField implements FormField {
+  """The default date value for the form field."""
+  defaultDate: DateTime
+
+  """The entity ID of the form field."""
+  entityId: Int!
+
+  """Indicates whether the form field is built-in."""
+  isBuiltIn: Boolean!
+
+  """Indicates whether the form field is required."""
+  isRequired: Boolean!
+
+  """The label to display for the form field."""
+  label: String!
+
+  """The latest date that can be selected for the form field."""
+  maxDate: DateTime
+
+  """The earliest date that can be selected for the form field."""
+  minDate: DateTime
+
+  """The sort order priority of the form field."""
+  sortOrder: Int!
+}
+
 """The user input for date form fields."""
 input DateFormFieldInput {
   """The user date input for the form field in ISO-8601 format."""
@@ -2867,6 +2921,9 @@ type DateFormFieldValue implements CustomerFormFieldValue {
   Entity ID of a custom form field value on a customer or customer address.
   """
   entityId: Int!
+
+  """The name of the form field that the value is for."""
+  name: String!
 }
 
 """ISO-8601 formatted date in UTC. (e.g. 2024-01-01T00:00:00Z)"""
@@ -3071,6 +3128,81 @@ type FileUploadFieldOption implements CatalogProductOption {
   maxFileSize: Int!
 }
 
+"""The details of a form field."""
+interface FormField {
+  """The entity ID of the form field."""
+  entityId: Int!
+
+  """Indicates whether the form field is built-in."""
+  isBuiltIn: Boolean!
+
+  """Indicates whether the form field is required."""
+  isRequired: Boolean!
+
+  """The label to display for the form field."""
+  label: String!
+
+  """The sort order priority of the form field."""
+  sortOrder: Int!
+}
+
+"""Object containing filters for querying form fields."""
+input FormFieldFiltersInput {
+  """Filter by form field entity IDs."""
+  entityIds: [Int!]
+
+  """Filter by built-in form fields."""
+  isBuiltIn: Boolean
+
+  """Filter by required form fields."""
+  isRequired: Boolean
+}
+
+"""The details of an option for a checkbox or multiple choice form field."""
+type FormFieldOption {
+  """The entity ID of the form field option."""
+  entityId: Int!
+
+  """The label to display for the form field option."""
+  label: String!
+}
+
+"""The sorting to use on form field results."""
+enum FormFieldSortInput {
+  FIELD_ID
+  SORT_ORDER
+}
+
+"""The types of form fields that can be queried."""
+type FormFields {
+  """The billing address form fields."""
+  billingAddress(
+    """Search filters for use when querying billing address form fields."""
+    filters: FormFieldFiltersInput
+
+    """Sorting to use when querying billing address form fields."""
+    sortBy: FormFieldSortInput = FIELD_ID
+  ): [FormField!]!
+
+  """The customer form fields."""
+  customer(
+    """Search filters for use when querying customer form fields."""
+    filters: FormFieldFiltersInput
+
+    """Sorting to use when querying customer form fields."""
+    sortBy: FormFieldSortInput = FIELD_ID
+  ): [FormField!]!
+
+  """The shipping address form fields."""
+  shippingAddress(
+    """Search filters for use when querying shipping address form fields."""
+    filters: FormFieldFiltersInput
+
+    """Sorting to use when querying shipping address form fields."""
+    sortBy: FormFieldSortInput = FIELD_ID
+  ): [FormField!]!
+}
+
 """Gift wrapping for product"""
 type GiftWrapping {
   """Indicates whether commenting is allowed for the gift wrapping."""
@@ -3125,6 +3257,11 @@ type Image {
 
   """Absolute path to original image using store CDN."""
   urlOriginal: String!
+
+  """
+  A templatized URL containing a {:size} parameter which can be replaced with a string specifying the desired image size in either inherent width (123w) or width and height (123x123).
+  """
+  urlTemplate: String!
 }
 
 """A connection to a list of items."""
@@ -3517,6 +3654,30 @@ type MultiLineTextFieldOption implements CatalogProductOption {
   minLength: Int
 }
 
+"""Multiline text form field."""
+type MultilineTextFormField implements FormField {
+  """The default text value for the form field."""
+  defaultText: String
+
+  """The entity ID of the form field."""
+  entityId: Int!
+
+  """Indicates whether the form field is built-in."""
+  isBuiltIn: Boolean!
+
+  """Indicates whether the form field is required."""
+  isRequired: Boolean!
+
+  """The label to display for the form field."""
+  label: String!
+
+  """The amount of rows for the form field."""
+  rows: Int!
+
+  """The sort order priority of the form field."""
+  sortOrder: Int!
+}
+
 """The user input for multiple choice form fields."""
 input MultipleChoiceFormFieldInput {
   """The custom form field ID."""
@@ -3534,6 +3695,9 @@ type MultipleChoiceFormFieldValue implements CustomerFormFieldValue {
   Entity ID of a custom form field value on a customer or customer address.
   """
   entityId: Int!
+
+  """The name of the form field that the value is for."""
+  name: String!
 
   """The multiple choice value selected by customer."""
   value: String!
@@ -3687,6 +3851,38 @@ type NumberFieldOption implements CatalogProductOption {
   lowest: Float
 }
 
+"""Number only form field."""
+type NumberFormField implements FormField {
+  """The default number value for the form field."""
+  defaultNumber: Float
+
+  """The entity ID of the form field."""
+  entityId: Int!
+
+  """Indicates whether the form field is built-in."""
+  isBuiltIn: Boolean!
+
+  """Indicates whether the form field is required."""
+  isRequired: Boolean!
+
+  """The label to display for the form field."""
+  label: String!
+
+  """
+  The maximum amount of characters that can be entered into text form field.
+  """
+  maxLength: Int
+
+  """The highest allowed number to be entered in the form field."""
+  maxNumber: Int
+
+  """The lowest allowed number to be entered in the form field."""
+  minNumber: Int
+
+  """The sort order priority of the form field."""
+  sortOrder: Int!
+}
+
 """The user input for number form fields."""
 input NumberFormFieldInput {
   """The custom form field ID."""
@@ -3702,6 +3898,9 @@ type NumberFormFieldValue implements CustomerFormFieldValue {
   Entity ID of a custom form field value on a customer or customer address.
   """
   entityId: Int!
+
+  """The name of the form field that the value is for."""
+  name: String!
 
   """The number value submitted by customer."""
   number: Float!
@@ -3914,6 +4113,32 @@ enum PageType {
   UNSUBSCRIBE
 }
 
+"""Password form field."""
+type PasswordFormField implements FormField {
+  """The default text value for the form field."""
+  defaultText: String
+
+  """The entity ID of the form field."""
+  entityId: Int!
+
+  """Indicates whether the form field is built-in."""
+  isBuiltIn: Boolean!
+
+  """Indicates whether the form field is required."""
+  isRequired: Boolean!
+
+  """The label to display for the form field."""
+  label: String!
+
+  """
+  The maximum amount of characters that can be entered into the form field.
+  """
+  maxLength: Int
+
+  """The sort order priority of the form field."""
+  sortOrder: Int!
+}
+
 """The user input for password form fields."""
 input PasswordFormFieldInput {
   """The custom form field ID."""
@@ -3930,8 +4155,37 @@ type PasswordFormFieldValue implements CustomerFormFieldValue {
   """
   entityId: Int!
 
+  """The name of the form field that the value is for."""
+  name: String!
+
   """The password text submitted by a customer."""
   password: String!
+}
+
+"""
+Pick list form field. Similar to Radio Buttons, but should be rendered as a dropdown select.
+"""
+type PicklistFormField implements FormField {
+  """The text to display before a user has made a selection."""
+  choosePrefix: String!
+
+  """The entity ID of the form field."""
+  entityId: Int!
+
+  """Indicates whether the form field is built-in."""
+  isBuiltIn: Boolean!
+
+  """Indicates whether the form field is required."""
+  isRequired: Boolean!
+
+  """The label to display for the form field."""
+  label: String!
+
+  """The options for the form field."""
+  options: [FormFieldOption!]!
+
+  """The sort order priority of the form field."""
+  sortOrder: Int!
 }
 
 """A connection to a list of items."""
@@ -4593,6 +4847,27 @@ type Query {
   site: Site!
 }
 
+"""Radio buttons form field."""
+type RadioButtonsFormField implements FormField {
+  """The entity ID of the form field."""
+  entityId: Int!
+
+  """Indicates whether the form field is built-in."""
+  isBuiltIn: Boolean!
+
+  """Indicates whether the form field is required."""
+  isRequired: Boolean!
+
+  """The label to display for the form field."""
+  label: String!
+
+  """The options for the form field."""
+  options: [FormFieldOption!]!
+
+  """The sort order priority of the form field."""
+  sortOrder: Int!
+}
+
 """Rating Filter"""
 type RatingSearchFilter implements SearchProductFilter {
   """Indicates whether filter is collapsed by default."""
@@ -4791,6 +5066,9 @@ union RequestResetPasswordError = ValidationError
 input RequestResetPasswordInput {
   """The email address of the customer requesting a reset password email."""
   email: String!
+
+  """A path to direct the customer to from the email."""
+  path: String
 }
 
 """The result of requesting a reset password email."""
@@ -5075,6 +5353,11 @@ type Settings {
 
   """Store display format information."""
   display: DisplayField!
+
+  """
+  The form fields to display on the storefront during customer registration or address creation.
+  """
+  formFields: FormFields!
 
   """Inventory settings."""
   inventory: InventorySettings
@@ -5519,6 +5802,32 @@ type TextFieldOption implements CatalogProductOption {
   minLength: Int
 }
 
+"""A single line text form field."""
+type TextFormField implements FormField {
+  """The default text value of the text form field."""
+  defaultText: String
+
+  """The entity ID of the form field."""
+  entityId: Int!
+
+  """Indicates whether the form field is built-in."""
+  isBuiltIn: Boolean!
+
+  """Indicates whether the form field is required."""
+  isRequired: Boolean!
+
+  """The label to display for the form field."""
+  label: String!
+
+  """
+  The maximum amount of characters that can be entered into the form field.
+  """
+  maxLength: Int
+
+  """The sort order priority of the form field."""
+  sortOrder: Int!
+}
+
 """The user input for text form fields."""
 input TextFormFieldInput {
   """The custom form field ID."""
@@ -5536,6 +5845,9 @@ type TextFormFieldValue implements CustomerFormFieldValue {
   Entity ID of a custom form field value on a customer or customer address.
   """
   entityId: Int!
+
+  """The name of the form field that the value is for."""
+  name: String!
 
   """The text submitted by a customer."""
   text: String!
@@ -5753,7 +6065,7 @@ type UpdateCustomerAddressResult {
 }
 
 """An error when updating a customer."""
-union UpdateCustomerError = CustomerDoesNotExistError | EmailAlreadyInUseError | ValidationError
+union UpdateCustomerError = CustomerDoesNotExistError | CustomerNotLoggedInError | EmailAlreadyInUseError | ValidationError
 
 """The values to use for customer update operation."""
 input UpdateCustomerInput {

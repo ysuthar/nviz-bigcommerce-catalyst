@@ -8,8 +8,8 @@ const config = {
       transparent: 'transparent',
       current: 'currentColor',
       black: '#000000',
-      primary: '#053FB0',
-      secondary: '#3071EF',
+      primary: '#0b4c7d',
+      secondary: '#734a8d',
       white: '#FFFFFF',
       error: {
         DEFAULT: '#AD0000',

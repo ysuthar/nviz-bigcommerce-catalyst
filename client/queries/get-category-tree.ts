@@ -28,6 +28,17 @@ export const GET_CATEGORY_TREE_QUERY = /* GraphQL */ `
   }
 `;
 
+export const GET_CATEGORY_MASTER = /* GraphQL */ `
+  query Category {
+    site {
+      categoryTree {
+          name
+          path
+      }
+    }
+  }
+`;
+
 export const getCategoryTree = cache(async (categoryId?: number) => {
   const query = graphql(GET_CATEGORY_TREE_QUERY);
   const customerId = await getSessionCustomerId();
@@ -35,6 +46,19 @@ export const getCategoryTree = cache(async (categoryId?: number) => {
   const response = await client.fetch({
     document: query,
     variables: { categoryId },
+    customerId,
+    fetchOptions: customerId ? { cache: 'no-store' } : { next: { revalidate } },
+  });
+
+  return response.data.site.categoryTree;
+});
+
+export const getCategory = cache(async () => {
+  const query = graphql(GET_CATEGORY_MASTER);
+  const customerId = await getSessionCustomerId();
+
+  const response = await client.fetch({
+    document: query,
     customerId,
     fetchOptions: customerId ? { cache: 'no-store' } : { next: { revalidate } },
   });
