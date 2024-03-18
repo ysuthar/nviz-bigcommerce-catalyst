@@ -23,29 +23,29 @@ export async function generateMetadata({ searchParams }: Props): Promise<Metadat
   };
 }
 
-export default async function BlogPostPage({ params: { locale }, searchParams }: Props) {
+export default async function Blog({ params: { locale }, searchParams }: Props) {
   const blogPosts = await getBlogPosts(searchParams);
   const t = await getTranslations({ locale, namespace: 'Pagination' });
 
-  if (!blogPosts || !blogPosts.isVisibleInNavigation) {
-    return notFound();
-  }
+  // if (!blogPosts || !blogPosts.isVisibleInNavigation) {
+  //   return notFound();
+  // }
 
   return (
-    <div className="mx-auto max-w-screen-xl">
-      <h1 className="mb-8 text-3xl font-black lg:text-5xl">{blogPosts.name}</h1>
+    <div className="flex flex-col gap-8 px-0 py-16">
+      <h1 className="mb-8 text-3xl font-black lg:text-5xl">Blogs</h1>
 
       <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8">
-        {blogPosts.posts.items.map((post) => {
+        {blogPosts?.posts.items.map((post) => {
           return <BlogPostCard blogPost={post} key={post.entityId} />;
         })}
       </div>
 
       <nav aria-label="Pagination" className="mb-12 mt-10 flex justify-center text-primary">
-        {blogPosts.posts.pageInfo.hasPreviousPage ? (
+        {blogPosts?.posts.pageInfo.hasPreviousPage ? (
           <Link
             className="focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/20"
-            href={`/blog?before=${String(blogPosts.posts.pageInfo.startCursor)}`}
+            href={`/blog?before=${String(blogPosts?.posts.pageInfo.startCursor)}`}
             scroll={false}
           >
             <span className="sr-only">{t('prev')}</span>
@@ -54,10 +54,10 @@ export default async function BlogPostPage({ params: { locale }, searchParams }:
         ) : (
           <ChevronLeft aria-hidden="true" className="inline-block h-8 w-8 text-gray-200" />
         )}
-        {blogPosts.posts.pageInfo.hasNextPage ? (
+        {blogPosts?.posts.pageInfo.hasNextPage ? (
           <Link
             className="focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/20"
-            href={`/blog?after=${String(blogPosts.posts.pageInfo.endCursor)}`}
+            href={`/blog?after=${String(blogPosts?.posts.pageInfo.endCursor)}`}
             scroll={false}
           >
             <span className="sr-only">{t('next')}</span>

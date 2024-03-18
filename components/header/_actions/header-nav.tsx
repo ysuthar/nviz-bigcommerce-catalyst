@@ -41,6 +41,11 @@ export const HeaderNav = async ({
         </NavigationMenuItem>
         <NavigationMenuItem className={cn(inCollapsedNav && 'w-full')}>
           <NavigationMenuLink asChild>
+            <Link href='/shop-products/'>Blogs</Link>
+          </NavigationMenuLink>
+        </NavigationMenuItem>
+        <NavigationMenuItem className={cn(inCollapsedNav && 'w-full')}>
+          <NavigationMenuLink asChild>
             <Link href='/'>Bath</Link>
           </NavigationMenuLink>
         </NavigationMenuItem>
@@ -50,6 +55,11 @@ export const HeaderNav = async ({
         </NavigationMenuItem>
         <NavigationMenuItem className={cn(inCollapsedNav && 'w-full')}><NavigationMenuLink asChild>
             <Link href='/'>Kitchen</Link>
+          </NavigationMenuLink>
+        </NavigationMenuItem>
+        <NavigationMenuItem className={cn(inCollapsedNav && 'w-full')}>
+          <NavigationMenuLink asChild>
+            <Link href='/shop-products/'>Blogs</Link>
           </NavigationMenuLink>
         </NavigationMenuItem>
         

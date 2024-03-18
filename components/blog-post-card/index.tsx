@@ -19,19 +19,19 @@ interface BlogPostCardProps {
 
 export const BlogPostCard = ({ blogPost }: BlogPostCardProps) => (
   <ComponentsBlogPostCard>
-    {blogPost.thumbnailImage ? (
+    {/* {blogPost.thumbnailImage ? ( */}
       <BlogPostImage>
         <Link className="block w-full" href={`/blog/${blogPost.entityId}`}>
           <Image
-            alt={blogPost.thumbnailImage.altText}
+            alt={(blogPost?.thumbnailImage?.altText) || blogPost.name}
             className="h-full w-full object-cover object-center"
             height={300}
-            src={blogPost.thumbnailImage.url}
+            src={(blogPost?.thumbnailImage?.url) || "/assets/images/blog1.jpg"}
             width={300}
           />
         </Link>
       </BlogPostImage>
-    ) : (
+    {/* ) : (
       <BlogPostBanner>
         <BlogPostTitle variant="inBanner">
           <span className="line-clamp-3 text-primary">{blogPost.name}</span>
@@ -42,7 +42,7 @@ export const BlogPostCard = ({ blogPost }: BlogPostCardProps) => (
           </span>
         </BlogPostDate>
       </BlogPostBanner>
-    )}
+    )} */}
 
     <BlogPostTitle>
       <Link href={`/blog/${blogPost.entityId}`}>{blogPost.name}</Link>

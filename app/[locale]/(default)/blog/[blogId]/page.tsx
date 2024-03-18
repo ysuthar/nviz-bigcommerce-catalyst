@@ -25,7 +25,9 @@ interface Props {
 export async function generateMetadata({ params: { blogId } }: Props): Promise<Metadata> {
   const blogPost = await getBlogPost(+blogId);
 
-  const title = blogPost?.seo.pageTitle ?? 'Blog';
+  console.log('blogPost', blogPost)
+
+  const title = blogPost?.seo?.pageTitle ?? 'Blog';
 
   return {
     title,
@@ -40,7 +42,7 @@ export default async function BlogPostPage({ params: { blogId } }: Props) {
   }
 
   return (
-    <div className="mx-auto max-w-4xl">
+    <div className="flex flex-col gap-8 px-0 py-16">
       <h1 className="mb-2 text-3xl font-black lg:text-5xl">{blogPost.name}</h1>
 
       <div className="mb-8 flex">
@@ -50,13 +52,23 @@ export default async function BlogPostPage({ params: { blogId } }: Props) {
         {blogPost.author ? <BlogPostAuthor>, by {blogPost.author}</BlogPostAuthor> : null}
       </div>
 
-      {blogPost.thumbnailImage ? (
-        <BlogPostImage className="mb-6 h-40 sm:h-80 lg:h-96">
+      <BlogPostImage>
           <Image
-            alt={blogPost.thumbnailImage.altText}
+            alt={(blogPost.thumbnailImage?.altText) || blogPost.name}
             className="h-full w-full object-cover object-center"
             height={900}
-            src={blogPost.thumbnailImage.url}
+            src={(blogPost.thumbnailImage?.url) || "/assets/images/banner1.jpg"}
+            width={600}
+          />
+      </BlogPostImage>
+
+      {/* {blogPost.thumbnailImage ? (
+        <BlogPostImage className="mb-6 h-40 sm:h-80 lg:h-96">
+          <Image
+            alt={blogPost.thumbnailImage?.altText}
+            className="h-full w-full object-cover object-center"
+            height={900}
+            src={blogPost.thumbnailImage?.url}
             width={900}
           />
         </BlogPostImage>
@@ -71,7 +83,7 @@ export default async function BlogPostPage({ params: { blogId } }: Props) {
             </span>
           </BlogPostDate>
         </BlogPostBanner>
-      )}
+      )} */}
 
       <div className="mb-10 text-base" dangerouslySetInnerHTML={{ __html: blogPost.htmlBody }} />
       <div className="mb-10 flex">
