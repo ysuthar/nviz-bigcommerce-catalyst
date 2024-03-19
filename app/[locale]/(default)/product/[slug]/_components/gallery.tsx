@@ -54,18 +54,26 @@ export const Gallery = ({
                 selectedImage ? (
                   <Image
                     alt={selectedImage.altText}
-                    className="h-full w-full object-contain"
+                    className="h-full w-full object-cover"
                     fill
                     priority={true}
                     sizes="(min-width: 1024px) 50vw, 100vw"
                     src={selectedImage.url}
                   />
                 ) : (
-                  <div className="flex aspect-square items-center justify-center bg-gray-200">
-                    <div className="text-base font-semibold text-gray-500">
-                      {noImageText ?? 'Coming soon'}
-                    </div>
-                  </div>
+                  // <div className="flex aspect-square items-center justify-center bg-gray-200">
+                  //   <div className="text-base font-semibold text-gray-500">
+                  //     {noImageText ?? 'Coming soon'}
+                  //   </div>
+                  // </div>
+                  <Image
+                    alt={""}
+                    className="h-full w-full object-cover"
+                    fill
+                    priority={true}
+                    sizes="(min-width: 1024px) 50vw, 100vw"
+                    src={"/assets/images/broken-image.jpg"}
+                  />
                 )
               }
             </GalleryImage>

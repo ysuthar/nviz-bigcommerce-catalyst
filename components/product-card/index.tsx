@@ -102,18 +102,18 @@ export const ProductCard = ({
             'aspect-[7/5]': imageSize === 'wide',
           })}
         >
-          {product.defaultImage ? (
+          {/* {product.defaultImage ? ( */}
             <Image
-              alt={product.defaultImage.altText ?? product.name ?? ''}
-              className="object-contain"
+              alt={(product?.defaultImage?.altText) ?? product.name ?? ''}
+              className="object-cover"
               fill
               priority={imagePriority}
-              sizes="(max-width: 768px) 50vw, (max-width: 1536px) 25vw, 500px"
-              src={product.defaultImage.url ?? ''}
+              // sizes="(max-width: 768px) 50vw, (max-width: 1536px) 25vw, 500px"
+              src={ (product?.defaultImage?.url) ?? "/assets/images/broken-image.jpg"}
             />
-          ) : (
+          {/* ) : (
             <div className="h-full w-full bg-gray-200" />
-          )}
+          )} */}
         </div>
       </ProductCardImage>
       <ProductCardInfo className={cn(showCart && 'justify-end')}>

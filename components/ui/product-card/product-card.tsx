@@ -73,7 +73,7 @@ ProductCardInfoBrandName.displayName = 'ProductCardInfoBrandName';
 const ProductCardInfoProductName = forwardRef<ElementRef<'h3'>, ComponentPropsWithRef<'h3'>>(
   ({ children, className, ...props }, ref) => {
     return (
-      <h3 className={cn('text-xl font-bold lg:text-2xl', className)} ref={ref} {...props}>
+      <h3 className={cn('text-xl font-bold lg:text-1xl text-center', className)} ref={ref} {...props}>
         {children}
       </h3>
     );

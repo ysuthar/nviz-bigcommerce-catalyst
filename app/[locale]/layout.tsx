@@ -51,7 +51,7 @@ export default function RootLayout({ children, params: { locale } }: RootLayoutP
 
   return (
     <html className={`${inter.variable} font-sans`} lang={locale}>
-      <body className="flex h-screen flex-col px-6">
+      <body className="px-6">
         <Notifications />
         <NextIntlClientProvider locale={locale} messages={{ Providers: messages.Providers ?? {} }}>
           <Providers>{children}</Providers>
